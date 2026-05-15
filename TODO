@@ -1,0 +1,5 @@
+- Should we enable, by default, necessary nix experimental features (I think we can do it on a per
+  command basis)? If not, README needs to explain that the user needs to enable them.
+- Mac support
+- BONUS: autocomplete remove and update
+- After foundation is clear, README file

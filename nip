@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+BRANCH="nixpkgs/nixos-25.11"
+
+help() {
+  cat <<EOF
+Usage: nip <command> [args...]
+
+Commands:
+  import              Read package list from stdin
+  install <pkg...>    Install packages
+  list                List installed packages
+  remove <pkg...>     Remove packages
+  update [pkg...]     Update all or specified packages
+EOF
+}
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ "$1" = "help" ]; then
+  help
+
+elif [ "$1" = "import" ]; then
+  shift
+  awk -v b="$BRANCH" '{print b "#" $0}' | nix profile add --stdin
+  nix profile wipe-history >/dev/null 2>&1
+
+elif [ "$1" = "install" ]; then
+  shift
+  nix profile add "${@/#/$BRANCH#}"
+  nix profile wipe-history >/dev/null 2>&1
+
+elif [ "$1" = "list" ]; then
+  SYSTEM="$(nix eval --impure --raw --expr builtins.currentSystem)"
+  nix profile list --json | grep -oP "\"attrPath\"\\s*:\\s*\"[^\"]*${SYSTEM}\\.\\K[^\"]+"
+
+elif [ "$1" = "remove" ]; then
+  shift
+  nix profile remove "$@"
+  nix profile wipe-history >/dev/null 2>&1
+
+elif [ "$1" = "update" ]; then
+  shift
+  if [ $# -gt 0 ]; then
+    nix profile upgrade "$@"
+    nix profile wipe-history >/dev/null 2>&1
+  else
+    nix profile upgrade --all
+    nix profile wipe-history >/dev/null 2>&1
+    nix store gc
+  fi
+
+else
+  help
+  exit 1
+fi
