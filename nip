@@ -8,8 +8,8 @@ Usage: nip <command> [args...]
 
 Commands:
   import              Read package list from stdin
-  install <pkg...>    Install packages
-  list                List installed packages
+  add <pkg...>        Add packages
+  list                List added packages
   remove <pkg...>     Remove packages
   update [pkg...]     Update all or specified packages
 EOF
@@ -23,7 +23,7 @@ elif [ "$1" = "import" ]; then
   awk -v b="$BRANCH" '{print b "#" $0}' | nix profile add --stdin
   nix profile wipe-history >/dev/null 2>&1
 
-elif [ "$1" = "install" ]; then
+elif [ "$1" = "add" ]; then
   shift
   nix profile add "${@/#/$BRANCH#}"
   nix profile wipe-history >/dev/null 2>&1
