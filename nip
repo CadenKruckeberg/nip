@@ -30,7 +30,7 @@ elif [ "$1" = "add" ] || [ "$1" = "install" ]; then
 
 elif [ "$1" = "list" ]; then
   SYSTEM="$(nix eval --impure --raw --expr builtins.currentSystem)"
-  nix profile list --json | grep -oP "\"attrPath\"\\s*:\\s*\"[^\"]*${SYSTEM}\\.\\K[^\"]+"
+  nix profile list --json | awk -v RS="${SYSTEM}." 'NR>1 {split($0, a, "\""); print a[1]}'
 
 elif [ "$1" = "remove" ]; then
   shift
