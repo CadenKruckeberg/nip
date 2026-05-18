@@ -1,0 +1,36 @@
+#compdef nip
+
+_nip() {
+  local -a commands
+  commands=(
+    "import:Read package list from stdin"
+    "add:Add packages"
+    "install:Alias for add"
+    "list:List added packages"
+    "remove:Remove packages"
+    "update:Update packages"
+    "help:Show help"
+  )
+
+  if (( CURRENT == 2 )); then
+    _describe 'command' commands
+    return
+  fi
+
+  local cmd="${words[2]}"
+
+  if [[ "$PREFIX" == -* ]]; then
+    _arguments \
+      '-h[Show help]' \
+      '--help[Show help]'
+    return
+  fi
+
+  if [[ "$cmd" == "remove" || "$cmd" == "update" ]]; then
+    local -a pkgs
+    pkgs=("${(@f)$(nip list 2>/dev/null)}")
+    _describe 'packages' pkgs
+  fi
+}
+
+compdef _nip nip
