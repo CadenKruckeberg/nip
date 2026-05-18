@@ -1,4 +1,5 @@
+- Zsh completions
+- Fish completions
 - After foundation is clear, README file
     Remember experimental features
-- BONUS: autocomplete remove and update
 - BONUS: nix flake for install?
