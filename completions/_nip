@@ -12,19 +12,19 @@ _nip() {
     "help:Show help"
   )
 
-  if (( CURRENT == 2 )); then
-    _describe 'command' commands
-    return
-  fi
-
-  local cmd="${words[2]}"
-
   if [[ "$PREFIX" == -* ]]; then
     _arguments \
       '-h[Show help]' \
       '--help[Show help]'
     return
   fi
+
+  if (( CURRENT == 2 )); then
+    _describe 'command' commands
+    return
+  fi
+
+  local cmd="${words[2]}"
 
   if [[ "$cmd" == "remove" || "$cmd" == "update" ]]; then
     local -a pkgs
