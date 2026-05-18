@@ -44,8 +44,20 @@ elif [ "$1" = "add" ] || [ "$1" = "install" ]; then
   maybe_wipe_history
 
 elif [ "$1" = "list" ]; then
+  if ! command -v jq >/dev/null 2>&1; then
+    echo "nip: 'jq' is required for 'list'. Install it with: nip add jq" >&2
+    exit 1
+  fi
+
   SYSTEM="$(nix eval --impure --raw --expr builtins.currentSystem)"
-  nix profile list --json | awk -v RS="${SYSTEM}." 'NR>1 {split($0, a, "\""); print a[1]}'
+  nix profile list --json |
+    jq -r --arg sys "$SYSTEM" '
+      .elements
+      | to_entries[]
+      | select(.value.originalUrl | startswith("flake:nixpkgs"))
+      | .value.attrPath
+      | split($sys + ".")[1]
+    '
 
 elif [ "$1" = "remove" ]; then
   shift
