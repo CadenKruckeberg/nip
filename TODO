@@ -1,4 +1,3 @@
-- Dotfile for branch
 - Should we enable, by default, necessary nix experimental features (I think we can do it on a per
   command basis)? If not, README needs to explain that the user needs to enable them.
 - After foundation is clear, README file

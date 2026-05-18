@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
-BRANCH="nixpkgs/nixos-25.11"
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+CONFIG_FILE="$XDG_CONFIG_HOME/nip/config"
+
+if [ -z "$BRANCH" ] && [ -f "$CONFIG_FILE" ]; then
+  . "$CONFIG_FILE"
+fi
+
+: "${BRANCH:=nixpkgs}"
 
 help() {
   cat <<EOF
