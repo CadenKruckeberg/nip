@@ -3,11 +3,9 @@
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 CONFIG_FILE="$XDG_CONFIG_HOME/nip/config"
 
-if [ -z "$BRANCH" ] && [ -f "$CONFIG_FILE" ]; then
-  . "$CONFIG_FILE"
-fi
+BRANCH="nixpkgs"
 
-: "${BRANCH:=nixpkgs}"
+[ -f "$CONFIG_FILE" ] && . "$CONFIG_FILE"
 
 help() {
   cat <<EOF
