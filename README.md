@@ -95,7 +95,12 @@ WIPE_HISTORY=1
 
 ## Troubleshooting
 - TODO error message when old nix version
-- TODO error messages when no experimental features
-- TODO error message when no jq
-- TODO issues with zsh
-
+- If you receive errors such as `error: experimental Nix feature 'nix-command' is disabled; add '--extra-experimental-features nix-command' to enable it` or `error: experimental Nix feature 'flakes' is disabled; add '--extra-experimental-features flakes' to enable it`, include `experimental-features = flakes nix-command` in your Nix Package Manager configuration file (likely `~/.config/nix/nix.conf`).
+- If you receive `nip: 'jq' is required for 'list'. Install it with: nip add jq`, run `nip add jq`.
+- If you are using `zsh` and completions aren't working, ensure the following is in your `.zshrc`:
+```console
+fpath=("\((HOME)/.local/share/zsh/site-functions" \)fpath)
+autoload -Uz compinit && compinit
+```
+```
+ 
