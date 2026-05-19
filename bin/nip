@@ -14,12 +14,12 @@ help() {
 Usage: nip <command> [args...]
 
 Commands:
-  add <pkg...>        Add packages
+  add <pkg...>        Add package(s)
   clean               Wipe history and collect garbage
-  import              Read package list from stdin
-  list                List added packages
-  remove <pkg...>     Remove packages
-  update [pkg...]     Update all or specified packages
+  import              Add package(s) from package list through stdin
+  list                List added package(s)
+  remove <pkg...>     Remove package(s)
+  update [pkg...]     Update all or specified package(s)
 EOF
 }
 
@@ -32,6 +32,7 @@ maybe_wipe_history() {
 }
 
 gc() {
+  echo "Collecting garbage..."
   nix store gc
 }
 
