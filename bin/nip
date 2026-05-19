@@ -14,8 +14,8 @@ help() {
 Usage: nip <command> [args...]
 
 Commands:
-  import              Read package list from stdin
   add <pkg...>        Add packages
+  import              Read package list from stdin
   list                List added packages
   remove <pkg...>     Remove packages
   update [pkg...]     Update all or specified packages
@@ -33,14 +33,14 @@ maybe_gc() {
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ "$1" = "help" ]; then
   help
 
-elif [ "$1" = "import" ]; then
-  shift
-  awk -v b="$BRANCH" '{print b "#" $0}' | nix profile add --stdin
-  maybe_wipe_history
-
 elif [ "$1" = "add" ] || [ "$1" = "install" ]; then
   shift
   nix profile add "${@/#/$BRANCH#}"
+  maybe_wipe_history
+
+elif [ "$1" = "import" ]; then
+  shift
+  awk -v b="$BRANCH" '{print b "#" $0}' | nix profile add --stdin
   maybe_wipe_history
 
 elif [ "$1" = "list" ]; then

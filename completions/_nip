@@ -3,8 +3,8 @@
 _nip() {
   local -a commands
   commands=(
-    "import:Read package list from stdin"
     "add:Add packages"
+    "import:Read package list from stdin"
     "install:Alias for add"
     "list:List added packages"
     "remove:Remove packages"
