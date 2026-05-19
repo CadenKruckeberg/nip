@@ -2,10 +2,9 @@
 
 ## Overview
 
-`nip` is a small wrapper/interface for the Nix Package Manager's `nix profile` written in Bash. When we ([Cody](https://github.com/crmckenna2) and [I](https://github.com/CadenKruckeberg)) were exploring the idea for this project, our early versions went by the name `np`; in an effort to differentiate our new work from our old, to have a real word as the name for our tool, and following the snowy, cold theme of Nix, we named it `nip`. This tool aims to recover the ease-of-use of traditional package managers like `apt`, `dnf`, etc. while reaping the benefits that come with (in our opinion, the best) package repository: `nixpkgs`. While reaching this goal, we made an effort to not obstruct a Nix user's workflow/environment if they wanted to also use `nip`.
+`nip` is a small wrapper/interface for the Nix Package Manager's `nix profile` written in Bash. When we ([Cody](https://github.com/crmckenna2) and [I](https://github.com/CadenKruckeberg)) were exploring the idea for this project, our early versions went by the name `np`; in an effort to differentiate our new work from our old, have a real word as the name for our tool, and follow the snowy, cold theme of Nix, we named it `nip`. This tool aims to recover the ease-of-use of traditional package managers like `apt`, `dnf`, etc. while reaping the benefits that come with (in our opinion, the best) package repository: `nixpkgs`. While reaching this goal, we made an effort to not obstruct a Nix user's workflow/environment if they wanted to also use `nip`.
 
 ## Usage
-
 
 | Command | Function |
 |--|--|
@@ -23,15 +22,15 @@
 
 #### Importing:
 ```console
-\$ cat packages.txt
+$ cat packages.txt
 cowsay
 curl
-\$ nip import < packages.txt
+$ nip import < packages.txt
 ```
 
 #### Listing:
 ```console
-\$ nip list
+$ nip list
 cowsay
 curl
 ```
@@ -73,7 +72,7 @@ will install `nip` with no fuss. To uninstall, simply run `nix profile remove ni
 You can clone this repository `git clone https://github.com/CadenKruckeberg/nip`, change directory into the project `cd nip`, and install it with its Makefile `make install` (this, of course, requires `make`). To uninstall, simply run `make uninstall` instead.
 
 > [!TIP]
-> The only real reason to install `nip` instead of just using the bash script is for completions. If you don't care for the completions, you can simply clone the repo and use the bash script (probably symlink it to somewhere in your `PATH` or otherwise add it to your `PATH`).
+> The only real reason to install `nip` instead of just using the bash script is for completions. If you don't care for the completions, you can simply clone the repo (and ensure execute permissions) and use the bash script (probably symlink it to somewhere in your `PATH` or otherwise add it to your `PATH`).
 
 ## Configuration
 
