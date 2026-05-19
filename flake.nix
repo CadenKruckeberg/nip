@@ -1,5 +1,5 @@
 {
-  description = "nip";
+  description = "nip is a small wrapper/interface for the Nix Package Manager's nix profile written in Bash";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs";
