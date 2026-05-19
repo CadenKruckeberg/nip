@@ -15,6 +15,7 @@ Usage: nip <command> [args...]
 
 Commands:
   add <pkg...>        Add packages
+  clean               Wipe history and collect garbage
   import              Read package list from stdin
   list                List added packages
   remove <pkg...>     Remove packages
@@ -22,12 +23,20 @@ Commands:
 EOF
 }
 
+wipe_history() {
+  nix profile wipe-history >/dev/null 2>&1
+}
+
 maybe_wipe_history() {
-  [ "$WIPE_HISTORY" -eq 1 ] && nix profile wipe-history >/dev/null 2>&1
+  [ "$WIPE_HISTORY" -eq 1 ] && wipe_history
+}
+
+gc() {
+  nix store gc
 }
 
 maybe_gc() {
-  [ "$GC_ON_UPDATE_ALL" -eq 1 ] && nix store gc
+  [ "$GC_ON_UPDATE_ALL" -eq 1 ] && gc
 }
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ "$1" = "help" ]; then
@@ -37,6 +46,10 @@ elif [ "$1" = "add" ] || [ "$1" = "install" ]; then
   shift
   nix profile add "${@/#/$BRANCH#}"
   maybe_wipe_history
+
+elif [ "$1" = "clean" ]; then
+  wipe_history
+  gc
 
 elif [ "$1" = "import" ]; then
   shift
