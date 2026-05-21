@@ -45,7 +45,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ "$1" = "help" ]; then
 
 elif [ "$1" = "add" ] || [ "$1" = "install" ]; then
   shift
-  nix profile add "${@/#/$BRANCH#}"
+  nix profile add "${@/#/$BRANCH#}" --impure
   maybe_wipe_history
 
 elif [ "$1" = "clean" ]; then
@@ -54,7 +54,7 @@ elif [ "$1" = "clean" ]; then
 
 elif [ "$1" = "import" ]; then
   shift
-  awk -v b="$BRANCH" '{print b "#" $0}' | nix profile add --stdin
+  awk -v b="$BRANCH" '{print b "#" $0}' | nix profile add --stdin --impure
   maybe_wipe_history
 
 elif [ "$1" = "list" ]; then
@@ -81,10 +81,10 @@ elif [ "$1" = "remove" ]; then
 elif [ "$1" = "update" ]; then
   shift
   if [ $# -gt 0 ]; then
-    nix profile upgrade "$@"
+    nix profile upgrade "$@" --impure
     maybe_wipe_history
   else
-    nix profile upgrade --all
+    nix profile upgrade --all --impure
     maybe_wipe_history
     maybe_gc
   fi
