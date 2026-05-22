@@ -19,6 +19,7 @@ Commands:
   import              Add package(s) from package list through stdin
   list                List added package(s)
   remove <pkg...>     Remove package(s)
+  search <pkg>        Search for packages whose name contains what you provide
   update [pkg...]     Update all or specified package(s)
 EOF
 }
@@ -77,6 +78,20 @@ elif [ "$1" = "remove" ]; then
   shift
   nix profile remove "$@"
   maybe_wipe_history
+
+elif [ "$1" = "search" ]; then
+  if ! command -v jq >/dev/null 2>&1; then
+    echo "nip: 'jq' is required for 'search'. Install it with: nip add jq" >&2
+    exit 1
+  fi
+
+  shift
+  nix search "$BRANCH" "$1" --json |
+    jq -r --arg pkg "$1" '
+      .[]
+      | select(.pname | test($pkg; "i"))
+      | "\(.pname): \(.description)"
+    '
 
 elif [ "$1" = "update" ]; then
   shift

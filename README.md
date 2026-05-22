@@ -12,6 +12,7 @@
 | `nip clean` | Wipe history and collect garbage |
 | `nip import` | Add package(s) from package list through stdin |
 | `nip list` | List added package(s) (**Note:** Only lists packages installed from the official `nixpkgs` repository) |
+| `nip search` | Search for packages whose name contains what you provide |
 | `nip remove` | Remove package(s) |
 | `nip update` | Update all or specified package(s) |
 
@@ -50,7 +51,7 @@ curl
 > At the time of writing, using `nix profile` (and by extension, `nip`) requires two features that Nix still considers "experimental". Include `experimental-features = flakes nix-command` in your Nix Package Manager configuration file (likely `~/.config/nix/nix.conf`).
 
 > [!IMPORTANT]
-> `nip list` depends on `jq`. After installing `nip`, simply run `nip add jq` (or obtain `jq` however else you'd like) to enable `nip list`.
+> `nip list` and `nip search` depend on `jq`. After installing `nip`, simply run `nip add jq` (or obtain `jq` however else you'd like) to enable `nip list`.
 
 > [!IMPORTANT]
 > If you are using `zsh` and want completions to work, add the following to your `.zshrc`:
@@ -96,7 +97,7 @@ WIPE_HISTORY=1
 ## Troubleshooting
 - If you receive `error: 'add' is not a recognised command`, ensure your Nix Package Manager is at least version `2.30.0`.
 - If you receive errors such as `error: experimental Nix feature 'nix-command' is disabled; add '--extra-experimental-features nix-command' to enable it` or `error: experimental Nix feature 'flakes' is disabled; add '--extra-experimental-features flakes' to enable it`, include `experimental-features = flakes nix-command` in your Nix Package Manager configuration file (likely `~/.config/nix/nix.conf`).
-- If you receive `nip: 'jq' is required for 'list'. Install it with: nip add jq`, run `nip add jq`.
+- If you receive `nip: 'jq' is required for 'list'. Install it with: nip add jq` or `nip: 'jq' is required for 'search'. Install it with: nip add jq`, run `nip add jq`.
 - If you are using `zsh` and completions aren't working, ensure the following is in your `.zshrc`:
 ```console
 fpath=("\((HOME)/.local/share/zsh/site-functions" \)fpath)

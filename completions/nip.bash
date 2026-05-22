@@ -2,7 +2,7 @@ _nip() {
   local cur prev words cword
   _init_completion || return
 
-  local commands="add clean import install list remove update help"
+  local commands="add clean import install list remove search update help"
 
   if [[ $cur == -* ]]; then
     COMPREPLY=($(compgen -W "-h --help" -- "$cur"))

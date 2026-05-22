@@ -9,6 +9,7 @@ _nip() {
     "install:Alias for add"
     "list:List added package(s)"
     "remove:Remove package(s)"
+    "search:Search for packages whose name contains what you provide"
     "update:Update all or specified package(s)"
     "help:Show help"
   )
