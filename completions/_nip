@@ -33,6 +33,15 @@ _nip() {
     pkgs=("${(@f)$(nip list 2>/dev/null)}")
     _describe 'packages' pkgs
   fi
+
+  if [[ "$cmd" == "add" || "$cmd" == "install" ]]; then
+    local -a pkgs
+    zle -M "Searching..."
+    pkgs=("${(@f)$(nip search "$PREFIX" 2>/dev/null)}")
+    zle -M ""
+    _describe 'packages' pkgs
+    return
+  fi
 }
 
 compdef _nip nip
